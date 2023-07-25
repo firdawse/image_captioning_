@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+
+    <script  type="module" src="main.js"> </script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="text-2xl font-medium title-font mb-4">Caption prediction App</h1>
+        <nav>
+            <ul>
+                <li id="welcomeElement"><a href="#welcome">Welcome </a></li>
+                <li id="applicationElement"><a href="#application">application</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main  id="container">
+         <!-- welcome -->
+        <section class="component" id="welcome">
+            <h2>Welcome</h2>
+            <p>
+                “A picture is worth a thousand words” 
+            </p>
+        </section>
+         <!-- end welcome -->
+         <!-- application -->
+         <section class="component bg-gray-100 py-8 min-h-screen flex items-center justify-center  hidden" id="application">
+            <div class="container mx-auto items-center flex justify-center">
+                <div class="w-4/5 bg-white shadow-lg rounded-lg p-8 flex flex-col md:flex-row my-4 ">
+                    <div class="w-full md:w-1/2 md:pr-8 border-2 p-4 rounded-md">
+                        <h2 class="text-gray-900 text-3xl font-medium title-font mb-4">Image Captioning Predictor</h2>
+                        <p class="mb-8 leading-relaxed text-gray-600 text-sm">Upload your image and select a model for caption prediction.</p>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="file">
+                                Upload your image:
+                            </label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="file" type="file" accept="image/*">
+                        </div>
+                        <div class="mb-4">
+                            <label for="model-select" class="block text-gray-700 text-sm font-bold mb-2">Choose a model:</label>
+                            <select name="models" id="model-select" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="COCO">COCO</option>
+                                <option value="Flicker">Flicker</option>
+                            </select>
+                        </div>
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-8 px-4 rounded w-full" id="predict-btn">
+                            Predict Caption
+                        </button>
+                    </div>
+                    <div class="ml-2 w-full md:w-1/2 md:pl-8 mt-8 md:mt-0 border-2 p-4 rounded-md">
+                        <div>
+                            <p>Prediction: </p>
+                            <p id="result" class="text-gray-700 font-bold"></p>
+                            <!-- The result will be displayed here -->
+                        </div>
+                        <div id="image-preview" class="mt-6 flex items-center justify-center">
+                            <!-- The image will be displayed here -->
+                            <img id="preview" src="" alt="Image Preview" class="mx-auto d-block" style="max-width: 100%; height: auto;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </section>
+          
+          
+         <!-- end application -->
+
+    </main>
+    <footer>
+        Directed By Profesor Ammour Alae
+    </footer>
+    <script>
+        window.addEventListener('popstate', function (event) {
+            singlePageManger(getPath())
+        });
+        
+        const getPath=()=>window.location.hash || '#welcome'
+        const singlePageManger =(path)=>{
+            const components=document.getElementsByClassName("component")
+            Array.from(components).forEach(element=>{
+                element.classList.add('hidden');
+            })
+            const links=document.querySelectorAll('header nav li')
+            Array.from(links).forEach(element=>{
+                element.classList.remove('selected');
+            })
+            document.querySelector(path).classList.remove('hidden')
+            document.querySelector('header nav li:has(a[href="'+path+'"])').classList.add('selected')
+        }
+        singlePageManger(getPath())
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
